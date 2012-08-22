@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= f.label :summary %><br />
-    <%= f.text_field :summary %>
+    <%= f.text_field :summary, :required => true %>
   </div>
   <div class="field">
     <%= f.label :description %><br />
@@ -21,7 +21,7 @@
   </div>
   <div class="field">
     <%= f.label :rating %><br />
-    <%= f.range_field :rating %>
+    <%= f.select :rating, [['Awful', 1], ['Decent', 2], ['Good', 3], ['Excellent', 4], ['Amazing', 5]] %>
   </div>
   <div class="actions">
     <%= f.submit %>
