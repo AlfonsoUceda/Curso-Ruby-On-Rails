@@ -1,3 +1,4 @@
+<h1>Users</h1>
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -14,6 +15,21 @@
   <b>Email:</b>
   <%= @user.email %>
 </p>
+
+<h2>Reviews</h2>
+
+<table>
+  <tr>
+    <th>Summary</th>
+    <th>Description</th>
+    <th>Rating</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <%= render partial: "shared/review", collection: @user.reviews %>
+</table>
 
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
