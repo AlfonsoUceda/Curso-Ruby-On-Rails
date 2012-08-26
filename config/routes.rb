@@ -1,10 +1,32 @@
 Webshop::Application.routes.draw do
-  resources :users
 
-  resources :reviews
+#     RUTA       ACCION                 HELPER
+  get "login" => "sessions#new", :as => "login"
+  get "logout" => "sessions#destroy", :as => "logout"
+  get "signup" => "users#new", :as => "new_user" 
+  get "reviews" => "reviews#index"
+  get "reviews/:id" => "reviews#show", :as  => "review"
+  delete "reviews/:id" => "reviews#destroy", :as  => "review"
 
-  resources :products
+  resources :sessions, :only => [:new, :create]
 
+  resources :users, :except => [:new]
+
+  resources :products do
+    member do 
+      put 'publish'
+      put 'unpublish'
+    end
+
+    collection do
+      put 'publish_all'
+      put 'unpusblish_all'
+    end
+    
+    resources :reviews, :except => [:show, :destroy]
+  end
+ 
+  root :to => "products#index"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

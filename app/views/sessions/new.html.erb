@@ -1,0 +1,13 @@
+<h1>Log In</h1>
+<%= notice %>
+<%= alert %>
+<%= form_tag sessions_path do %>
+  <%= label_tag ":email", "Email" %>
+  <%= text_field_tag :email, params[:email] %><br />
+  <%= label_tag :password, "Password" %>
+  <%= password_field_tag :password %><br />
+  <%= submit_tag "Login" %>
+<% end %>
+<p>
+  <%= link_to "Register User", new_user_path %>
+</p>

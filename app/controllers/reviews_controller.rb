@@ -1,14 +1,4 @@
 class ReviewsController < ApplicationController
-  # GET /reviews
-  # GET /reviews.json
-  def index
-    @reviews = Review.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @reviews }
-    end
-  end
 
   # GET /reviews/1
   # GET /reviews/1.json
@@ -25,6 +15,7 @@ class ReviewsController < ApplicationController
   # GET /reviews/new.json
   def new
     @review = Review.new
+    @product = Product.find(params[:product_id])
 
     respond_to do |format|
       format.html # new.html.erb
@@ -35,16 +26,19 @@ class ReviewsController < ApplicationController
   # GET /reviews/1/edit
   def edit
     @review = Review.find(params[:id])
+    @product = Product.find(params[:product_id])
   end
 
   # POST /reviews
   # POST /reviews.json
   def create
-    @review = Review.new(params[:review])
+    @product = Product.find(params[:product_id])
+    @review = @product.reviews.new(params[:review])
+    @review.user_id = session[:user_id]
 
     respond_to do |format|
       if @review.save
-        format.html { redirect_to @review, notice: 'Review was successfully created.' }
+        format.html { redirect_to @product, notice: 'Review was successfully created.' }
         format.json { render json: @review, status: :created, location: @review }
       else
         format.html { render action: "new" }
@@ -57,10 +51,11 @@ class ReviewsController < ApplicationController
   # PUT /reviews/1.json
   def update
     @review = Review.find(params[:id])
+    @product = Product.find(params[:product_id])
 
     respond_to do |format|
       if @review.update_attributes(params[:review])
-        format.html { redirect_to @review, notice: 'Review was successfully updated.' }
+        format.html { redirect_to @product, notice: 'Review was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -73,10 +68,11 @@ class ReviewsController < ApplicationController
   # DELETE /reviews/1.json
   def destroy
     @review = Review.find(params[:id])
+    @product = @review.product
     @review.destroy
 
     respond_to do |format|
-      format.html { redirect_to reviews_url }
+      format.html { redirect_to @product }
       format.json { head :no_content }
     end
   end
