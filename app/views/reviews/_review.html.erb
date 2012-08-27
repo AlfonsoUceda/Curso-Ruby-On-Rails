@@ -4,5 +4,6 @@
   <td><%= review.rating %></td>
   <td><%= review.username %></td>
   <td><%= link_to 'Show', review_path(review)%></td>
-  <td><%= edit_and_destroy_review_link_user @product, review %></td>
+  <td><%= edit_review_link_user @product, review %></td>
+  <td><%= link_to 'Destroy', review, method: :delete, data: { confirm: 'Are you sure?' } if is_admin? %></td>
 </tr>
